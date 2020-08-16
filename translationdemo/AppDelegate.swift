@@ -7,6 +7,9 @@
 //
 
 import UIKit
+import Amplify
+import AmplifyPlugins
+import AWSPredictionsPlugin
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -14,7 +17,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
+        do {
+            try Amplify.add(plugin: AWSCognitoAuthPlugin())
+            try Amplify.add(plugin: AWSPredictionsPlugin())
+            try Amplify.configure()
+            print("Amplify configured with Auth and Predictions plugins")
+        } catch {
+            print("Failed to initialize Amplify with \(error)")
+        }
+
         return true
     }
 
